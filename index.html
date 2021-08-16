@@ -7,7 +7,6 @@
 
         <!-- Vue.js CDN -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
     </head>   
     <body>
         
@@ -17,11 +16,17 @@
                 <input type="text" v-model="equation"/>
             </div>
 
+            <p>calculation process</p>
+            <li v-for="tmp in process">
+            {{ tmp }}
+            </li>
+
             <div>
                 <label>total:</label>
-                <input type="text"/>
+                <input type="text" v-model="total"/>
             </div>
 
+            <template v-if="!resetFlag">
             <div class="buttons" style="width: 300px; padding-top:10px;">
                 <button v-on:click="add(1)">1</button>
                 <button v-on:click="add(2)">2</button>
@@ -47,8 +52,12 @@
                 <button v-on:click="add('/')">/</button>
                 <button v-on:click="check">=</button>
             </div>
+            </template>
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="reset">reset</button>
+                
+            </div>
         </div>
 
-    <script type="text/javascript" src="app.js"></script>
     </body>
 </html>

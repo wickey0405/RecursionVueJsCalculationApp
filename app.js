@@ -22,10 +22,21 @@ var vm = new Vue({
             nums: [],
             operators: [],
             equation: "",
-            process:[]
+            process:[],
+            total: 0,
+            resetFlag: false,
         }
     },
     methods:{
+        reset(){
+            this.temp = "";
+            this.nums = [];
+            this.operators = [];
+            this.equation = "";
+            this.process = [];
+            this.total = 0;
+            this.resetFlag = false;
+        },
         isNumber(input){
             if (Number.isNaN(Number(input))) return false;
             return true;
@@ -57,13 +68,14 @@ var vm = new Vue({
                 this.equation = this.equation.slice(0,-1);
                 this.equation += input;
             }
-            console.log("nums: "+this.nums);
-            console.log("oprs: "+this.operators)
+            
             return this.equation;
         },
         check(){
             if (this.isOperator(this.temp)) return;
             this.nums.push(this.temp);
+            // console.log("nums: "+this.nums);
+            // console.log("oprs: "+this.operators)
             this.totalCalculation();
         },
         calculation(num1, num2, operator){
@@ -78,6 +90,7 @@ var vm = new Vue({
             }
         },
         makeProcessEquation(){
+            
             let result = "";
             for(let i = 0; i < this.nums.length-1; i++){
                 result += this.nums[i] + " " + this.operators[i] + " "; 
@@ -86,34 +99,31 @@ var vm = new Vue({
             this.process.push(result);
         },
         totalCalculation(){
-            for (let i = 0; i < this.nums.length-1; i++){
+            let i = 0;
+            while (this.operators.includes("*") || this.operators.includes("/")){
                 if (this.operators[i]==="*" || this.operators[i] === "/"){
-                    this.nums[i] = calculation(this.nums[i], this.nums[i+1], this.operators[i]);
-                    for (let j = i+1; j < this.nums.length-1; j++){
-                        this.nums[j] = this.nums[j+1];
-                        this.operators[j] = this.operators[j+1];
-                    }
-                    this.nums.pop();
-                    this.operators.pop();
-
+                    this.nums.splice(i,2,this.calculation(this.nums[i], this.nums[i+1], this.operators[i]));
+                    this.operators.splice(i,1);
                     this.makeProcessEquation();
+                    i = 0;
+                } else {
+                    i++;
                 }
             }
 
-            for (let i = 0; i < this.nums.length-1; i++){
-                this.nums[i] = calculation(this.nums[i], this.nums[i+1], this.operators[i]);
-                for (let j = i+1; j < this.nums.length-1; j++){
-                    this.nums[j] = this.nums[j+1];
-                    this.operators[j] = this.operators[j+1];
-                }
-                this.nums.pop();
-                this.operators.pop();
+            while(this.nums.length!=1){
+                let num1 = this.nums.shift();
+                let num2 = this.nums.shift();
+                let operator = this.operators.shift();
 
+                this.nums.unshift(this.calculation(num1,num2,operator));
                 this.makeProcessEquation();
             }
+
+            this.total = this.nums[0];
+            this.resetFlag = true;
             return this.nums[0];
         }
         
     }
 })
-
