@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+        <!-- Vue.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>   
+    <body>
+        
+        <div id="app">
+            <div>
+                <label>input:</label>
+                <input type="text" v-model="equation"/>
+            </div>
+
+            <div>
+                <label>total:</label>
+                <input type="text"/>
+            </div>
+
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="add(1)">1</button>
+                <button v-on:click="add(2)">2</button>
+                <button v-on:click="add(3)">3</button>
+            </div>
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="add(4)">4</button>
+                <button v-on:click="add(5)">5</button>
+                <button v-on:click="add(6)">6</button>
+            </div>
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="add(7)">7</button>
+                <button v-on:click="add(8)">8</button>
+                <button v-on:click="add(9)">9</button>
+            </div>
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="add(0)">0</button>
+                <button v-on:click="add('+')">+</button>
+                <button v-on:click="add('-')">-</button>
+            </div>
+            <div class="buttons" style="width: 300px; padding-top:10px;">
+                <button v-on:click="add('*')">*</button>
+                <button v-on:click="add('/')">/</button>
+                <button v-on:click="check">=</button>
+            </div>
+        </div>
+
+    <script type="text/javascript" src="app.js"></script>
+    </body>
+</html>
